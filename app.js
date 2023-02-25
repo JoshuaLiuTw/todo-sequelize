@@ -11,6 +11,12 @@ const session = require('express-session')
 // 載入設定檔，要寫在 express-session 以後
 const usePassport = require('./config/passport')
 
+app.use((req, res, next) => {
+  res.locals.isAuthenticated = req.isAuthenticated()
+  res.locals.user = req.user
+  next()
+})
+
 const app = express()
 const PORT = 3000
 
