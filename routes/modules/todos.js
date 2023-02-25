@@ -32,7 +32,7 @@ router.get('/:id/edit', (req, res) => {
   const id = req.params.id
 
   return Todo.findOne({ where: { id, UserId } })
-    .then(todo => res.render('edit', { todo: todo.get() }))
+    .then(todo => res.render('edit', { todo: todo.get() }))//???
     .catch(error => console.log(error))
 })
 
@@ -52,5 +52,14 @@ router.put('/:id', (req, res) => {
     .catch(error => console.log(error))
 })
 
+router.delete('/:id', (req, res) => {
+  const UserId = req.user.id
+  const id = req.params.id
+
+  return Todo.findOne({ where: { id, UserId } })
+    .then(todo => todo.destroy())
+    .then(() => res.redirect('/'))
+    .catch(error => console.log(error))
+})
 
 module.exports = router
